@@ -1,0 +1,29 @@
+aid: substack
+url: https://raw.githubusercontent.com/api-evangelist/substack/refs/heads/main/apis.yml
+name: Substack
+x-type: company
+description: >-
+  Substack is a publishing platform for newsletters and podcasts with built-in subscription billing, paid posts, chat, video, and recommendations.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Newsletter
+  - Creator
+  - Email
+  - Subscription
+  - Publishing
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://substack.com/
+  - type: Plans
+    url: plans/substack-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/substack-rate-limits.yml
+  - type: FinOps
+    url: finops/substack-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
