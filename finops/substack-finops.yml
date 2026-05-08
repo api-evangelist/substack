@@ -16,9 +16,10 @@ tags:
 - Cost Management
 - FOCUS
 description: FOCUS-aligned FinOps placeholder for Substack. Pipeline will replace with real billing details.
-notes: Initial scaffold — billing model has not yet been reconciled.
+notes: "Initial scaffold \u2014 billing model has not yet been reconciled."
 sources:
 - https://substack.com/
+- https://substack.com/help
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
