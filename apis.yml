@@ -1,7 +1,7 @@
 aid: substack
 url: https://raw.githubusercontent.com/api-evangelist/substack/refs/heads/main/apis.yml
 name: Substack
-x-type: company
+kind: company
 description: Substack is a publishing platform for newsletters and podcasts with built-in subscription billing, paid posts,
   chat, video, and recommendations.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
