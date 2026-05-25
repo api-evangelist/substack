@@ -1,54 +1,102 @@
 aid: substack
-url: https://raw.githubusercontent.com/api-evangelist/substack/refs/heads/main/apis.yml
 name: Substack
-kind: company
-description: Substack is a publishing platform for newsletters and podcasts with built-in subscription billing, paid posts,
-  chat, video, and recommendations.
+description: >-
+  Substack is an independent newsletter and media platform that lets writers,
+  podcasters, video creators, and other culture makers publish directly to
+  readers and monetize through paid subscriptions. Founded in 2017 by Chris
+  Best (CEO), Jairaj Sethi (CTO), and Hamish McKenzie (CWO) and headquartered
+  in San Francisco with a New York City office, Substack provides built-in
+  subscription billing, paid posts, podcasting, chat, video, Notes, and a
+  cross-publication recommendations network. Creators keep 90 percent of
+  subscription revenue (less credit card fees) and own their mailing lists
+  and content. The platform reports more than five million paid subscriptions
+  and tens of millions of weekly active readers. Substack does not offer a
+  general-purpose public REST API for managing publications, posts, or
+  subscribers. It does publish a narrowly scoped official Developer API
+  (released April 2026) that allows token-authenticated lookup of public
+  Substack profiles by LinkedIn handle, gated by an application and
+  Terms-of-Use process. Read access to public content is otherwise available
+  via per-publication RSS feeds, and the broader integration ecosystem relies
+  on reverse-engineered, unofficial JSON endpoints used by the Substack web
+  application.
+type: Index
+position: Provider
+access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Newsletter
-  - Creator
-  - Email
-  - Subscription
+  - Newsletters
   - Publishing
+  - Creator Economy
+  - Subscriptions
+  - Email
+  - Podcasting
+  - Notes
+  - Media
+  - Independent Media
+  - Paid Content
+url: https://raw.githubusercontent.com/api-evangelist/substack/refs/heads/main/apis.yml
 created: '2026-05-08'
-modified: '2026-05-08'
-specificationVersion: '0.19'
+modified: '2026-05-25'
+specificationVersion: '0.20'
 apis:
+  - name: Substack Developer API
+    description: >-
+      Narrowly scoped official API that returns public Substack profile data
+      for a given LinkedIn handle. Access requires accepting the Developer
+      API Terms of Use, applying via form, and generating a token from the
+      Developer API section of account settings. Only profiles meeting
+      Substack's authenticity thresholds are returned.
+    humanURL: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
+    baseURL: https://substack.com
+    tags:
+      - Profile
+      - LinkedIn
+      - Read-Only
+      - Gated
+    properties:
+      - type: Documentation
+        url: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
   - name: Substack RSS Feeds
-    description: Public RSS feeds at /feed for each publication, used for syndication and read access.
-    humanURL: https://substack.com/help/rss
-    baseURL: https://<publication>.substack.com
+    description: >-
+      Per-publication public RSS feeds available at
+      https://{publication}.substack.com/feed for syndication and read-only
+      access to posts.
+    humanURL: https://support.substack.com/hc/en-us/articles/360037466012
+    baseURL: https://{publication}.substack.com
     tags:
-    - RSS
-    - Read-Only
-    - Unofficial
+      - RSS
+      - Read-Only
+      - Syndication
     properties:
-    - type: Documentation
-      url: https://substack.com/help/rss
-  - name: Substack Internal/Unofficial API
-    description: Undocumented JSON endpoints used by the Substack web app; not officially supported and subject to change.
-    humanURL: https://substack.com/
-    baseURL: https://substack.com/api/v1
-    tags:
-    - Unofficial
-    - Undocumented
-    properties:
-    - type: Documentation
-      url: https://substack.com/
+      - type: Documentation
+        url: https://support.substack.com/hc/en-us/articles/360037466012
 common:
+  - type: Website
+    url: https://substack.com/
+  - type: About
+    url: https://substack.com/about
+  - type: Help
+    url: https://support.substack.com/
+  - type: Blog
+    url: https://on.substack.com/
+  - type: Pricing
+    url: https://substack.com/pricing
+  - type: Jobs
+    url: https://substack.com/jobs
+  - type: Contact
+    url: https://substack.com/contact
+  - type: TermsOfService
+    url: https://substack.com/tos
+  - type: PrivacyPolicy
+    url: https://substack.com/privacy
+  - type: VulnerabilityDisclosure
+    url: https://substack.com/vulnerability-disclosure
   - type: GitHubOrganization
     url: https://github.com/substackinc
   - type: LinkedIn
     url: https://www.linkedin.com/company/substack
-  - type: Website
-    url: https://substack.com/
-  - type: Plans
-    url: plans/substack-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/substack-rate-limits.yml
-  - type: FinOps
-    url: finops/substack-finops.yml
+  - type: Twitter
+    url: https://twitter.com/SubstackInc
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
