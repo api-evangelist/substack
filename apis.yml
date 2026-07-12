@@ -71,6 +71,10 @@ apis:
       - type: Documentation
         url: https://support.substack.com/hc/en-us/articles/360037466012
 common:
+  - type: VulnerabilityDisclosure
+    url: security/substack-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/substack-domain-security.yml
   - type: Website
     url: https://substack.com/
   - type: About
