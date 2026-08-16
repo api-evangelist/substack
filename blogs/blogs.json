@@ -5,7 +5,7 @@
       "source": "https://on.substack.com/feed",
       "feed_url": "https://on.substack.com/feed",
       "title": "",
-      "saved": 0,
+      "saved": 1,
       "method": "feed"
     },
     {
@@ -13,9 +13,10 @@
       "feed_url": "https://support.substack.com/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
-  "post_count": 24,
-  "fetched": "2026-08-06T14:08:46Z"
+  "post_count": 25,
+  "fetched": "2026-08-15T12:11:08Z"
 }
