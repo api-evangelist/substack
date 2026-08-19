@@ -57,7 +57,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/substack/refs/heads/main/apis.yml
 created: '2026-05-08'
 modified: '2026-08-13'
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 apis:
   - name: Substack Developer API
     description: >-
