@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: probed
+source: live probes of Substack discovery documents and endpoints
+note: >-
+  Conformance here is asserted only where a probe returned the artifact the standard
+  defines. Substack publishes no OpenAPI, so every REST-shaped standard below is
+  recorded as not-conformant for lack of a contract, not as a judgement about the
+  implementation.
+standards:
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: >-
+      https://substack.com/.well-known/oauth-authorization-server returns 200
+      application/json with issuer, authorization_endpoint, token_endpoint, jwks_uri,
+      scopes_supported, response_types_supported and code_challenge_methods_supported.
+  - id: rfc9728-oauth-protected-resource-metadata
+    conforms: true
+    evidence: >-
+      https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp returns
+      200 with resource, authorization_servers, scopes_supported and
+      bearer_methods_supported, and is advertised in the 401 WWW-Authenticate header.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported ["S256"] in both discovery documents.
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint https://substack.com/oauth/register advertised in RFC 8414 metadata.
+  - id: rfc9126-pushed-authorization-requests
+    conforms: true
+    evidence: pushed_authorization_request_endpoint https://substack.com/oauth/request in the OIDC document.
+  - id: rfc8628-device-authorization-grant
+    conforms: true
+    evidence: >-
+      device_authorization_endpoint and grant type
+      urn:ietf:params:oauth:grant-type:device_code in the OIDC document.
+  - id: oidc-core
+    conforms: true
+    evidence: >-
+      jwks_uri (200, application/jwk-set+json), userinfo_endpoint, id_token signing
+      algs PS256/RS256, claims_supported, end_session_endpoint.
+  - id: oidc-discovery
+    conforms: partial
+    evidence: >-
+      A complete OpenID Provider Configuration document is served, but from
+      /oauth/.well-known/openid-configuration. The RFC 8615 / OIDC Discovery canonical
+      path https://substack.com/.well-known/openid-configuration returns 404, so a
+      spec-compliant client cannot discover it.
+  - id: mcp-authorization
+    conforms: true
+    evidence: >-
+      https://mcp.substack.com/api/v1/mcp returns 401 with a Bearer challenge carrying
+      resource_metadata, per the MCP authorization specification's use of RFC 9728.
+  - id: mcp-streamable-http
+    conforms: unverified
+    evidence: >-
+      Endpoint accepts POST with Accept: application/json, text/event-stream, but the
+      transport could not be confirmed past the 401 without credentials.
+  - id: oauth2
+    conforms: true
+    evidence: authorization_code and refresh_token grants advertised; see authentication/substack-authentication.yml
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every Substack host probed.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Observed error bodies use ad-hoc JSON envelopes
+      ({"error":"missing_token","error_description":...} and
+      {"error":"Resource Not Found","type":"single"}), not application/problem+json.
+  - id: openapi
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document found on substack.com, api.substack.com,
+      mcp.substack.com or support.substack.com; /openapi.json, /openapi.yaml,
+      /swagger.json, /api-docs and /v1/openapi.json all 404.
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document and no documented webhook surface.
+  - id: a2a
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on every host.
+  - id: rss-2.0
+    conforms: true
+    evidence: >-
+      https://on.substack.com/feed returns 200 application/xml, RSS 2.0 with the
+      content, dc, atom and itunes namespaces.
+  - id: hsts
+    conforms: true
+    evidence: 'strict-transport-security: max-age=31536000; includeSubDomains; preload on substack.com'
+    cross_ref: security/substack-domain-security.yml
+  - id: dnssec
+    conforms: false
+    evidence: no DNSSEC on substack.com (see security/substack-domain-security.yml)
+  - id: caa
+    conforms: false
+    evidence: no CAA records on substack.com
+compliance_programs:
+  published: false
+  note: >-
+    No trust center, no SOC 2 / ISO 27001 / PCI attestation page and no compliance
+    index was found on any Substack host. trust.substack.com resolves to a reader
+    publication ("The Trust Algorithm"), not a Substack trust center — it is a
+    wildcard publication subdomain and must not be read as a compliance surface.
+    Substack does publish a vulnerability disclosure policy and a privacy policy;
+    those are recorded in security/ and apis.yml rather than as certifications.

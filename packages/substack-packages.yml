@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, crandb.r-pkg.org, rubygems.org, crates.io,
+  packagist.org, github.com/substackinc
+official_package_count: 0
+note: >-
+  Substack, Inc. publishes NO first-party client library in any registry. The
+  github.com/substackinc organization contains only forks and internal infrastructure
+  (connect-session-knex, favicons, prosemirror-menu, terraform-aws-ecs-service,
+  whisperX, snowflake-promise, node-detective-cjs, po2json, mcp-server-datadog) —
+  nothing that wraps a Substack API. No SDKs pointer is emitted for this provider,
+  because there is no official SDK to point at.
+  NAMESPACE TRAP: the npm user "substack" is James Halliday, the Node.js author behind
+  browserify, minimist, through and hundreds of other packages. Those packages have
+  nothing to do with Substack, Inc. and none of them are recorded here. Any automated
+  npm-by-author harvest of "substack" will misattribute a large slice of the Node
+  ecosystem to this company.
+packages: []
+community_packages_note: >-
+  Recorded for integrator awareness only. Every entry below is third-party, wraps
+  Substack's undocumented web-application endpoints rather than the Developer API,
+  and is unaffiliated with Substack, Inc. Versions and dates read from each registry's
+  metadata endpoint on 2026-08-13.
+community_packages:
+  - language: typescript
+    registry: npm
+    name: substack-api
+    url: https://www.npmjs.com/package/substack-api
+    install: npm install substack-api
+    version: 4.0.2
+    published: '2026-06-20'
+    repo: https://github.com/jakub-k-slys/substack-api
+    official: false
+  - language: typescript
+    registry: npm
+    name: substack-ts
+    url: https://www.npmjs.com/package/substack-ts
+    install: npm install substack-ts
+    version: 0.1.22
+    published: '2026-03-27'
+    repo: https://github.com/ma2za/substack-ts
+    official: false
+  - language: typescript
+    registry: npm
+    name: substack-skill
+    url: https://www.npmjs.com/package/substack-skill
+    install: npm install substack-skill
+    version: 0.1.5
+    published: '2026-03-13'
+    repo: https://github.com/Gajesh2007/substack-cli
+    official: false
+    note: TypeScript SDK + CLI aimed at AI agents
+  - language: typescript
+    registry: npm
+    name: n8n-nodes-substack
+    url: https://www.npmjs.com/package/n8n-nodes-substack
+    install: npm install n8n-nodes-substack
+    version: 3.0.2
+    published: '2026-06-20'
+    repo: https://github.com/jakub-k-slys/n8n-nodes-substack
+    official: false
+  - language: typescript
+    registry: npm
+    name: '@danielsimonjr/substack-mcp'
+    url: https://www.npmjs.com/package/@danielsimonjr/substack-mcp
+    install: npx -y @danielsimonjr/substack-mcp
+    version: 1.0.1
+    published: '2026-08-03'
+    official: false
+    note: >-
+      Third-party MCP server. NOT Substack's official server — the official one is the
+      remote endpoint https://mcp.substack.com/api/v1/mcp (see mcp/substack-mcp.yml).
+  - language: python
+    registry: pypi
+    name: substack-api
+    url: https://pypi.org/project/substack-api/
+    install: pip install substack-api
+    version: 1.3.0
+    published: '2026-05-29'
+    repo: https://github.com/nhagar/substack_api
+    official: false
+    note: self-described as "Unofficial wrapper for the Substack API"
+  - language: r
+    registry: cran
+    name: substackR
+    url: https://cran.r-project.org/package/=substackR
+    install: install.packages("substackR")
+    version: 0.1.15
+    published: '2025-06-17'
+    official: false
+registries_checked:
+  - registry: npm
+    official_hits: 0
+  - registry: pypi
+    official_hits: 0
+    note: the pypi project "substack" (0.0.1, 2020-08-07) is an unrelated website plugin
+  - registry: cran
+    official_hits: 0
+  - registry: rubygems
+    official_hits: 0
+    note: 'gem "substack" 404'
+  - registry: crates.io
+    official_hits: 0
+    note: crate "substack" 403/absent
+  - registry: packagist
+    official_hits: 0
+    note: only unrelated vendor "substacks"
+  - registry: maven-central
+    official_hits: 0
+  - registry: nuget
+    official_hits: 0
+  - registry: pkg.go.dev
+    official_hits: 0

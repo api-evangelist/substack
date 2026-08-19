@@ -1,0 +1,76 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.substack.com/hc/en-us/articles/360037607131-How-much-does-Substack-cost
+docs: https://substack.com/going-paid
+plan_count: 2
+currency: USD
+model: revenue-share
+note: >-
+  Substack does not sell API access and publishes no API plans, quotas or overage
+  pricing. There is no paid developer tier: the Developer API is granted by application
+  at no charge, and the MCP server is included with a Bestseller publication rather than
+  purchased. What Substack does publish is platform pricing, which is a revenue share on
+  creator subscription income — that is what is recorded here. https://substack.com/pricing
+  returns 404; the canonical pricing page is the Help Center article above.
+plans:
+  - name: Publishing
+    price: 0
+    currency: USD
+    billing_period: none
+    description: >-
+      Publishing on Substack is free regardless of subscriber count. No platform fee
+      until paid subscriptions are enabled.
+    included:
+      - unlimited posts
+      - unlimited free subscribers
+      - email delivery
+      - podcast and video hosting
+      - Notes, Chat, custom domain support
+    limits: none published
+  - name: Paid subscriptions
+    price: 10
+    price_unit: percent-of-transaction
+    currency: USD
+    billing_period: per-transaction
+    description: >-
+      Substack takes 10% of each paid-subscription transaction. Stripe's fees apply on
+      top and are charged by Stripe, not Substack.
+    third_party_fees:
+      - provider: Stripe
+        name: credit card fee
+        amount: 2.9% + $0.30 per transaction
+      - provider: Stripe
+        name: Billing fee (recurring subscriptions)
+        amount: 0.7% of recurring payments
+        effective: July 2024
+        note: >-
+          Creators who enabled payments before 2024-07-10 kept the prior 0.5% billing
+          fee through 2025-06-30.
+    payment_methods:
+      - Visa
+      - MasterCard
+      - Discover
+      - American Express
+      - European direct debit / iDEAL / Bancontact / Sofort (Stripe fees vary by country)
+    limits: none published
+    note: >-
+      Subscription prices themselves are set by each creator, not by Substack. Readers
+      pay no additional Substack fee.
+api_plans:
+  count: 0
+  note: >-
+    No priced API tier exists. Developer API access is by application (Substack states
+    7-10 business days for approval). MCP server access requires Admin role on a
+    Bestseller publication — an eligibility gate tied to publication performance, not a
+    purchasable plan, and Substack publishes no definition of the Bestseller threshold
+    on the developer-facing pages.
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://support.substack.com/api/v2/help_center/en-us/articles/360037607131.json
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/pricing
+    http_status: 404
+  - fetched: '2026-08-13'
+    url: https://substack.com/going-paid
+    http_status: 200

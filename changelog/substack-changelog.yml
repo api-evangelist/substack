@@ -1,0 +1,53 @@
+generated: '2026-08-13'
+method: searched
+source: https://substack.com/changelog
+scheme: dated-product-notes
+current_version: null
+note: >-
+  Substack maintains a page it calls "Recent changes" at https://substack.com/changelog
+  (HTTP 200, title "Changelog"), described on the page as "a running list of notable
+  product changes happening at Substack". It is a product changelog, not an API
+  changelog — there is no per-version entry, no breaking-change marker and no API
+  surface named anywhere on it. The entries the server renders are also stale: the most
+  recent items served to a non-JavaScript client are dated 5-6 years ago and link to
+  blog.substack.com posts. Substack's live product announcements are published to the
+  blog at https://on.substack.com/ instead. Neither the Developer API (Jan 2026 terms)
+  nor the MCP server (Aug 2026 docs) has an entry.
+scope: product
+api_changelog_published: false
+entries:
+  - date: null
+    relative_date: 5 years ago
+    category: Product Release
+    highlights:
+      - New and improved Subscribers dashboard
+    link: https://blog.substack.com/p/new-better-analytics-for-your-subscribers
+    breaking: false
+  - date: null
+    relative_date: 6 years ago
+    category: Product Release
+    highlights:
+      - New publication theming and appearance customization options
+    link: https://blog.substack.com/p/new-publication-themes
+    breaking: false
+  - date: null
+    relative_date: 6 years ago
+    category: Product Release
+    highlights:
+      - Homepage discovery revamp with category lists and a Featured section
+      - Beta release of Substack Reader
+    link: https://blog.substack.com/p/new-reader-homepage
+    breaking: false
+related:
+  blog: https://on.substack.com/
+  blog_feed: https://on.substack.com/feed
+  status_incidents: https://status.substack.com/history
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://substack.com/changelog
+    http_status: 200
+    content_type: text/html
+    note: >-
+      Entry dates are rendered as relative strings ("5 years ago") in the server HTML
+      with no machine-readable date attribute, so absolute dates are recorded as null
+      rather than computed.

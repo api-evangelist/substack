@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://support.substack.com/hc/en-us/articles/360041759232-Can-I-embed-a-signup-form-for-my-Substack-publication,
+  https://support.substack.com/hc/en-us/articles/25665267911572-How-do-I-embed-Substack-posts-or-notes-on-a-website
+note: >-
+  Substack ships no JavaScript component library and no npm element package. Its
+  client-side surface is entirely iframe embeds generated inside the product — the code
+  is copied out of the publication dashboard or a share menu, not imported from a
+  package. There is no loader script, no configuration API and, per Substack's own
+  documentation, no customization beyond a single logo toggle on the signup form.
+families:
+  - name: Subscription
+    components:
+      - name: Signup form embed
+        type: iframe
+        url_pattern: https://{publication}.substack.com/embed
+        probe:
+          url: https://on.substack.com/embed
+          http_status: 200
+          content_type: text/html
+        obtained_from: Publication Settings > Growth features
+        docs: https://support.substack.com/hc/en-us/articles/360041759232-Can-I-embed-a-signup-form-for-my-Substack-publication
+        configuration:
+          - option: Show pub logo on embed
+            values: [on, off]
+        customizable: false
+        host_requirements: any platform supporting iframes (WordPress, Squarespace, custom sites); Medium not supported
+        behaviour: >-
+          After Subscribe, the reader is shown subscription plan options when payments
+          are enabled, or Pledges options when Pledges are enabled, plus any
+          recommended publications.
+  - name: Content
+    components:
+      - name: Post embed
+        type: iframe
+        obtained_from: post Share menu > More > Embed
+        docs: https://support.substack.com/hc/en-us/articles/25665267911572-How-do-I-embed-Substack-posts-or-notes-on-a-website
+        customizable: false
+      - name: Note embed
+        type: iframe
+        obtained_from: note share icon > Embed note
+        docs: https://support.substack.com/hc/en-us/articles/25665267911572-How-do-I-embed-Substack-posts-or-notes-on-a-website
+        customizable: false
+  - name: Third-party content in Substack
+    note: >-
+      The inverse direction — embedding other services inside a Substack post — is
+      documented per provider (video, audio, code blocks, Datawrapper charts,
+      Polymarket odds). These are consumption surfaces inside the editor, not
+      components Substack exposes to developers, and are listed only for completeness.
+    docs:
+      - https://support.substack.com/hc/en-us/articles/360037832971-How-do-I-embed-media-in-my-post-e-g-images-video-GIFs
+      - https://support.substack.com/hc/en-us/articles/15722290158100-How-do-I-embed-Datawrapper-charts-in-a-Substack-post
+loaders: []
+packages: []
+oembed:
+  supported: false
+  probe:
+    url: https://substack.com/api/v1/oembed
+    http_status: 404

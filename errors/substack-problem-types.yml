@@ -1,0 +1,77 @@
+generated: '2026-08-13'
+method: probed
+source: live unauthenticated requests to Substack endpoints
+format: vendor-json
+note: >-
+  Substack publishes no OpenAPI and no error reference, so nothing here is derived from
+  a spec or from documentation. Every entry below is an error body this pipeline
+  actually received from a Substack host on 2026-08-13, quoted verbatim. Three
+  different envelopes are in use across three surfaces, which is itself the finding:
+  there is no single error contract an agent can rely on. Substack does not use
+  RFC 9457 application/problem+json anywhere observed.
+envelopes:
+  - surface: mcp.substack.com
+    shape: '{"error": "<code>", "error_description": "<human message>"}'
+    content_type: application/json
+    style: OAuth 2.0 error response (RFC 6749 section 5.2 shape)
+  - surface: '{publication}.substack.com'
+    shape: '{"error": "<message>", "type": "<kind>"}'
+    content_type: application/json
+  - surface: substack.com
+    shape: HTML
+    content_type: text/html
+    note: >-
+      The substack.com web application answers unknown paths with a 404 status but a
+      full HTML page (the "Discover Substack Newsletters" shell). The status code is
+      honest — it is a real 404, not a soft 200 — but the body is not machine-readable.
+problems:
+  - status: 401
+    code: missing_token
+    title: Missing or malformed Authorization header
+    detail: Missing or malformed Authorization header
+    surface: POST https://mcp.substack.com/api/v1/mcp
+    content_type: application/json
+    headers:
+      www_authenticate: 'Bearer realm="substack", resource_metadata="https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp"'
+    remediation: >-
+      Complete the OAuth 2.1 authorization-code + PKCE flow against
+      https://substack.com with the mcp:read scope and resend with an
+      Authorization: Bearer header. The challenge points at RFC 9728 protected
+      resource metadata, so a spec-aware MCP client can self-configure from the 401.
+    observed: '2026-08-13'
+  - status: 404
+    code: Resource Not Found
+    title: Resource Not Found
+    detail: '{"error":"Resource Not Found","type":"single"}'
+    surface: GET https://{publication}.substack.com/.well-known/*
+    content_type: application/json
+    remediation: The path does not exist on the publication host.
+    observed: '2026-08-13'
+  - status: 404
+    code: not-found
+    title: Not found
+    detail: 'Not found, go <a href="/">home<a/>'
+    surface: GET https://api.substack.com/*, https://mcp.substack.com/*
+    content_type: text/html
+    note: >-
+      The API hosts return an HTML fragment (with a malformed closing anchor tag) for
+      unknown paths, not JSON. An agent parsing this surface must branch on
+      Content-Type, not assume JSON.
+    observed: '2026-08-13'
+  - status: 403
+    code: bot-challenge
+    title: Cloudflare JavaScript challenge
+    detail: 'Enable JavaScript and cookies to continue'
+    surface: GET https://support.substack.com/hc/en-us/articles/*
+    content_type: text/html
+    note: >-
+      The documentation host itself returns 403 to non-browser clients. The same
+      content is served without challenge by the Zendesk Help Center API at
+      https://support.substack.com/api/v2/help_center/en-us/articles/<id>.json.
+    observed: '2026-08-13'
+undocumented:
+  developer_api: >-
+    No error contract could be captured for the Substack Developer API
+    (GET https://substack.com/profile/search/linkedin/{handle}). It requires an
+    approved bearer token, and the technical documentation article is not reachable
+    by this pipeline. Nothing is recorded for it rather than guessed.

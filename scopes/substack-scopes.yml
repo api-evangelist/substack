@@ -1,0 +1,96 @@
+generated: '2026-08-13'
+method: probed
+source: https://substack.com/.well-known/oauth-authorization-server
+docs: https://substack.com/oauth/.well-known/openid-configuration
+note: >-
+  Substack publishes no human-readable OAuth scope reference. Every scope below was
+  read from the provider's own machine-readable discovery documents: the RFC 8414
+  Authorization Server Metadata at the host root and the OpenID Connect Discovery
+  document at /oauth/.well-known/openid-configuration. The two lists differ — the OIDC
+  document additionally advertises apple_podcasts — so the union is recorded with the
+  source of each. Descriptions marked derived are inferred from the scope name and the
+  corresponding product surface; Substack does not document them.
+schemes:
+  - name: SubstackOAuth
+    type: oauth2
+    issuer: https://substack.com
+    source: https://substack.com/.well-known/oauth-authorization-server
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://substack.com/oauth/auth
+        tokenUrl: https://substack.com/oauth/token
+        pkce: S256
+      - flow: deviceCode
+        deviceAuthorizationUrl: https://substack.com/oauth/device/auth
+        tokenUrl: https://substack.com/oauth/token
+        source: https://substack.com/oauth/.well-known/openid-configuration
+      - flow: implicit
+        authorizationUrl: https://substack.com/oauth/auth
+        source: https://substack.com/oauth/.well-known/openid-configuration
+        note: advertised in the OIDC document only; not in the RFC 8414 document
+scopes:
+  - scope: openid
+    description: OpenID Connect authentication; issue an ID token for the signed-in Substack account.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+  - scope: profile
+    description: Read the standard OIDC profile claims for the account.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+  - scope: email
+    description: Read the account email claim.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+  - scope: offline_access
+    description: Issue a refresh token so access can be renewed without re-consent.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+  - scope: mcp:read
+    description: >-
+      Read-only access through the official Substack MCP server at
+      https://mcp.substack.com/api/v1/mcp. This is the only scope the MCP protected
+      resource metadata declares as supported.
+    description_method: probed
+    sources: [oauth-authorization-server, openid-configuration, oauth-protected-resource]
+    protected_resource: https://mcp.substack.com/api/v1/mcp
+  - scope: notes.read
+    description: Read access to Substack Notes.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+    note: >-
+      Advertised by the authorization server but not reachable through any documented
+      Substack surface — the MCP server's own documentation states it cannot access
+      Notes activity, and there is no published Notes REST API. Recorded because the
+      provider advertises it, not because a consumer-facing contract exists.
+  - scope: notes.write
+    description: Write access to Substack Notes.
+    description_method: derived
+    sources: [oauth-authorization-server, openid-configuration]
+    note: >-
+      Same as notes.read — advertised in discovery, with no published contract behind
+      it. This is the only write scope Substack advertises anywhere.
+  - scope: apple_podcasts
+    description: Podcast-feed linkage for the Apple Podcasts integration.
+    description_method: derived
+    sources: [openid-configuration]
+    note: present only in the OIDC discovery document, not in the RFC 8414 document
+claims_supported:
+  - sub
+  - name
+  - subscription
+  - publication_role
+  - email
+  - publication_id
+  - sid
+  - auth_time
+  - iss
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://substack.com/.well-known/oauth-authorization-server
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/oauth/.well-known/openid-configuration
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+    http_status: 200

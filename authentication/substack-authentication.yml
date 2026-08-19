@@ -1,0 +1,111 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  https://substack.com/.well-known/oauth-authorization-server,
+  https://substack.com/oauth/.well-known/openid-configuration,
+  https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+docs: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
+note: >-
+  Substack has no OpenAPI, so this profile was not derived from a spec — it was read
+  from the provider's live OAuth/OIDC discovery documents and from the WWW-Authenticate
+  challenge the MCP endpoint returns. Two distinct auth models are in play and they do
+  not share credentials: the Developer API uses a self-service bearer token minted in
+  account settings after an approval process, while the MCP server uses full OAuth 2.1
+  with dynamic client registration.
+summary:
+  types: [oauth2, openIdConnect, http]
+  http_schemes: [bearer]
+  oauth2_flows: [authorizationCode, deviceCode, implicit, refreshToken]
+  pkce: [S256]
+  dynamic_client_registration: true
+  mtls: false
+schemes:
+  - name: SubstackOAuth
+    type: oauth2
+    issuer: https://substack.com
+    surfaces: [mcp.substack.com/api/v1/mcp]
+    flows:
+      authorizationCode:
+        authorizationUrl: https://substack.com/oauth/auth
+        tokenUrl: https://substack.com/oauth/token
+        refreshUrl: https://substack.com/oauth/token
+        pkce_methods: [S256]
+        scope_count: 8
+      deviceCode:
+        deviceAuthorizationUrl: https://substack.com/oauth/device/auth
+        tokenUrl: https://substack.com/oauth/token
+        grant: urn:ietf:params:oauth:grant-type:device_code
+      implicit:
+        authorizationUrl: https://substack.com/oauth/auth
+        note: advertised in the OIDC document only
+    endpoints:
+      registration: https://substack.com/oauth/register
+      jwks: https://substack.com/oauth/jwks
+      userinfo: https://substack.com/oauth/me
+      pushed_authorization_request: https://substack.com/oauth/request
+      end_session: https://substack.com/oauth/session/end
+    token_endpoint_auth_methods: [none, client_secret_basic]
+    id_token_signing_algs: [PS256, RS256]
+    response_types: ['code id_token', code, id_token, none]
+    response_modes: [form_post, fragment, query]
+    authorization_response_iss_parameter_supported: true
+    scopes_source: scopes/substack-scopes.yml
+  - name: SubstackOIDC
+    type: openIdConnect
+    openIdConnectUrl: https://substack.com/oauth/.well-known/openid-configuration
+    note: >-
+      Non-canonical discovery location. The RFC 8615 path
+      https://substack.com/.well-known/openid-configuration returns 404; a client that
+      follows the spec will not find this document.
+    claims: [sub, name, subscription, publication_role, email, publication_id, sid, auth_time, iss]
+  - name: MCPBearer
+    type: http
+    scheme: bearer
+    in: header
+    parameter: Authorization
+    surface: https://mcp.substack.com/api/v1/mcp
+    required_scope: mcp:read
+    challenge: 'Bearer realm="substack", resource_metadata="https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp"'
+    protected_resource_metadata: https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+  - name: DeveloperAPIToken
+    type: http
+    scheme: bearer
+    in: header
+    parameter: Authorization
+    surface: https://substack.com
+    issuance: >-
+      Create a Substack account, accept the Developer API Terms of Use, submit the
+      access form, then generate a token under Settings > Developer API > Create new
+      token. Substack states access is granted within 7-10 business days to applicants
+      who meet its requirements.
+    terms: https://substack.com/api-tos
+    docs: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
+    note: >-
+      The technical documentation article is linked from Substack's own API Terms of
+      Use but is not listed in the public Help Center index and its Zendesk API record
+      returns 401, so the exact header name and error contract could not be read
+      first-party. Not recorded rather than guessed.
+unauthenticated_surfaces:
+  - surface: https://{publication}.substack.com/feed
+    auth: none
+    note: public per-publication RSS; no credential required
+  - surface: https://{publication}.substack.com/api/v1/posts
+    auth: none
+    note: >-
+      Undocumented JSON endpoint used by the Substack web application. Reachable
+      anonymously and returns 200, but Substack publishes no contract for it and it is
+      not covered by the Developer API Terms of Use. Recorded as observed, not endorsed.
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://substack.com/.well-known/oauth-authorization-server
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/oauth/jwks
+    http_status: 200
+    content_type: application/jwk-set+json
+  - fetched: '2026-08-13'
+    url: https://mcp.substack.com/api/v1/mcp
+    http_status: 401
+  - fetched: '2026-08-13'
+    url: https://substack.com/api-tos
+    http_status: 200

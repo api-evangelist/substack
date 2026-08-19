@@ -1,0 +1,69 @@
+{
+  "authorization_endpoint": "https://substack.com/oauth/auth",
+  "device_authorization_endpoint": "https://substack.com/oauth/device/auth",
+  "claims_parameter_supported": false,
+  "claims_supported": [
+    "sub",
+    "name",
+    "subscription",
+    "publication_role",
+    "email",
+    "publication_id",
+    "sid",
+    "auth_time",
+    "iss"
+  ],
+  "code_challenge_methods_supported": [
+    "S256"
+  ],
+  "end_session_endpoint": "https://substack.com/oauth/session/end",
+  "grant_types_supported": [
+    "implicit",
+    "authorization_code",
+    "refresh_token",
+    "urn:ietf:params:oauth:grant-type:device_code"
+  ],
+  "issuer": "https://substack.com",
+  "jwks_uri": "https://substack.com/oauth/jwks",
+  "authorization_response_iss_parameter_supported": true,
+  "response_modes_supported": [
+    "form_post",
+    "fragment",
+    "query"
+  ],
+  "response_types_supported": [
+    "code id_token",
+    "code",
+    "id_token",
+    "none"
+  ],
+  "scopes_supported": [
+    "openid",
+    "profile",
+    "email",
+    "offline_access",
+    "apple_podcasts",
+    "mcp:read",
+    "notes.read",
+    "notes.write"
+  ],
+  "subject_types_supported": [
+    "public"
+  ],
+  "token_endpoint_auth_methods_supported": [
+    "none",
+    "client_secret_basic"
+  ],
+  "token_endpoint": "https://substack.com/oauth/token",
+  "id_token_signing_alg_values_supported": [
+    "PS256",
+    "RS256"
+  ],
+  "pushed_authorization_request_endpoint": "https://substack.com/oauth/request",
+  "request_parameter_supported": false,
+  "request_uri_parameter_supported": false,
+  "userinfo_endpoint": "https://substack.com/oauth/me",
+  "claim_types_supported": [
+    "normal"
+  ]
+}

@@ -1,0 +1,53 @@
+generated: '2026-08-13'
+method: searched
+source: https://substack.com/api-tos
+limit_count: 0
+note: >-
+  Substack states that rate limits exist but publishes no number, no window, no scope
+  and no header. Section 5 of the Developer API Terms of Use reads: "Your use of the
+  API is subject to rate limits, quotas, and other technical restrictions as determined
+  by Substack in its sole discretion. You agree not to circumvent or attempt to bypass
+  such restrictions. Substack may modify, suspend, or terminate API access or limits at
+  any time." That is a policy, not a limit — an integrator cannot size a workload
+  against it, and an agent has no runtime signal to back off on.
+limits: []
+response_headers:
+  observed: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* (RFC 9331 draft) or Retry-After header was returned on
+    any unauthenticated response probed on 2026-08-13 — not by the public RSS feed, not
+    by the publication JSON endpoints, and not by the MCP endpoint's 401. The response
+    headers Substack does set are cache-control, strict-transport-security, and its own
+    x-cluster / x-deploy / x-served-by / x-service diagnostics.
+exhaustion:
+  status_code: unknown
+  body: unknown
+  note: not probed — deliberately not exercised, since exceeding an undisclosed limit is exactly what the terms forbid
+surfaces_checked:
+  - url: https://on.substack.com/api/v1/posts?limit=1
+    http_status: 200
+    ratelimit_headers: none
+  - url: https://on.substack.com/feed
+    http_status: 200
+    ratelimit_headers: none
+  - url: https://mcp.substack.com/api/v1/mcp
+    http_status: 401
+    ratelimit_headers: none
+  - url: https://substack.com/.well-known/oauth-authorization-server
+    http_status: 200
+    ratelimit_headers: none
+robots:
+  url: https://substack.com/robots.txt
+  http_status: 200
+  note: >-
+    robots.txt disallows /action/, /publish, /sign-in, /channel-frame and
+    /session-attribution-frame for all agents, and disallows everything for BLEXBot.
+    It is the only quantified access constraint Substack publishes, and it governs
+    crawling rather than API calls.
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://substack.com/api-tos
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/robots.txt
+    http_status: 200

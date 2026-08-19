@@ -1,0 +1,87 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://support.substack.com/hc/en-us/articles/50834026608916-How-to-connect-Substack-to-your-AI-Assistant
+deployment:
+  mode: remote
+  endpoint: https://mcp.substack.com/api/v1/mcp
+  auth: oauth
+  verified: probed
+server:
+  name: Substack
+  vendor: Substack, Inc.
+  official: true
+  transport: http
+  url: https://mcp.substack.com/api/v1/mcp
+  docs: https://support.substack.com/hc/en-us/articles/50834026608916-How-to-connect-Substack-to-your-AI-Assistant
+  clients_documented:
+    - Claude (desktop + web, custom connector)
+    - ChatGPT
+    - Cursor
+authorization:
+  model: OAuth 2.1 authorization-code + PKCE, per MCP authorization spec
+  authorization_server: https://substack.com
+  protected_resource_metadata: https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+  authorization_server_metadata: https://substack.com/.well-known/oauth-authorization-server
+  required_scope: mcp:read
+  dynamic_client_registration: https://substack.com/oauth/register
+  pkce: S256
+  bearer_methods: [header]
+eligibility:
+  note: >-
+    Substack gates the connector, not the endpoint. The documented requirements are
+    that the connecting user is an Admin on the publication and that the publication
+    is a Bestseller publication. An ineligible publication returns an error at the
+    consent step.
+  admin_required: true
+  publication_tier: Bestseller
+capabilities:
+  access: read-only
+  documented_data:
+    - publication dashboard metrics (subscriber counts, revenue)
+    - post performance
+    - traffic sources
+    - paid subscriber retention
+    - publication settings
+  documented_exclusions:
+    - cannot publish posts
+    - cannot send Notes
+    - cannot modify the account
+    - cannot access profile data
+    - cannot access Notes activity
+tools:
+  status: gated
+  note: >-
+    tools/list is authenticated. An anonymous JSON-RPC POST of
+    {"jsonrpc":"2.0","id":1,"method":"tools/list"} to the endpoint returns HTTP 401
+    with {"error":"missing_token"} and a WWW-Authenticate: Bearer challenge, so the
+    real tool names and inputSchemas require an authenticated introspection against a
+    Bestseller publication. Substack publishes no tool list in its documentation, so
+    none is recorded here rather than guessed. The documented capability surface above
+    is what the provider states the server can read.
+  list: []
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://mcp.substack.com/api/v1/mcp
+    method: POST tools/list
+    http_status: 401
+    body: '{"error":"missing_token","error_description":"Missing or malformed Authorization header"}'
+    www_authenticate: 'Bearer realm="substack", resource_metadata="https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp"'
+  - fetched: '2026-08-13'
+    url: https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+    http_status: 200
+    content_type: application/json
+  - fetched: '2026-08-13'
+    url: https://support.substack.com/api/v2/help_center/en-us/articles/50834026608916.json
+    http_status: 200
+    note: >-
+      support.substack.com serves a Cloudflare JavaScript challenge (HTTP 403) to
+      non-browser clients; the article body was read from the Zendesk Help Center API,
+      which is the same first-party content.
+x-not-this:
+  note: >-
+    Several third-party "Substack MCP" servers exist (mark-liu/substack-mcp,
+    conorbronsdon/substack-mcp, @danielsimonjr/substack-mcp on npm, Narrareach,
+    SubflowAI, AnythingMCP). None of them are Substack, Inc. and none are recorded
+    as this provider's server. Only the mcp.substack.com endpoint above is
+    first-party.

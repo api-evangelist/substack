@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* across every Substack host in apis.yml
+note: >-
+  Substack serves RFC 8414 OAuth 2.0 Authorization Server Metadata from the root
+  of every host on the substack.com apex (substack.com, mcp.substack.com,
+  api.substack.com and publication subdomains all return the same document, all
+  pointing at the single issuer https://substack.com). The RFC 9728 Protected
+  Resource Metadata document for the official MCP server is served only by
+  mcp.substack.com, at the path-suffixed location the MCP spec requires. The
+  OpenID Connect discovery document is NOT at the RFC 8615 canonical path — it is
+  served from /oauth/.well-known/openid-configuration, which is why the root
+  /.well-known/openid-configuration probe 404s. No security.txt, no api-catalog,
+  no ai-plugin.json and no agent card are served on any host.
+hosts:
+  - https://substack.com
+  - https://mcp.substack.com
+  - https://api.substack.com
+  - https://support.substack.com
+  - https://on.substack.com
+documents:
+  - path: /.well-known/oauth-authorization-server
+    host: substack.com
+    status: 200
+    content_type: application/json
+    file: substack-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-authorization-server
+    host: mcp.substack.com
+    status: 200
+    content_type: application/json
+    note: identical document to substack.com; issuer is https://substack.com
+    spec: RFC 8414
+  - path: /.well-known/oauth-authorization-server
+    host: api.substack.com
+    status: 200
+    content_type: application/json
+    note: identical document; served apex-wide
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource/api/v1/mcp
+    host: mcp.substack.com
+    status: 200
+    content_type: application/json
+    file: substack-oauth-protected-resource-mcp.json
+    spec: RFC 9728
+    note: >-
+      Advertised by the MCP endpoint itself in its 401 WWW-Authenticate header:
+      Bearer realm="substack", resource_metadata="https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp"
+  - path: /oauth/.well-known/openid-configuration
+    host: substack.com
+    status: 200
+    content_type: application/json
+    file: substack-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+    note: non-canonical location (not under the host root /.well-known/)
+  - path: /.well-known/openid-configuration
+    host: substack.com
+    status: 404
+  - path: /.well-known/security.txt
+    host: substack.com
+    status: 404
+  - path: /.well-known/security.txt
+    host: mcp.substack.com
+    status: 404
+  - path: /.well-known/api-catalog
+    host: substack.com
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    host: substack.com
+    status: 404
+  - path: /.well-known/agent-card.json
+    host: substack.com
+    status: 404
+  - path: /.well-known/agent-card.json
+    host: mcp.substack.com
+    status: 404
+  - path: /.well-known/agent.json
+    host: substack.com
+    status: 404
+  - path: /.well-known/agent.json
+    host: mcp.substack.com
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    host: support.substack.com
+    status: 404
+    note: Zendesk-hosted help center; not part of the Substack OAuth apex
+related:
+  jwks_uri: https://substack.com/oauth/jwks
+  jwks_status: 200

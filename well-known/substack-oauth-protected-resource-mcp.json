@@ -1,0 +1,12 @@
+{
+  "resource": "https://mcp.substack.com/api/v1/mcp",
+  "authorization_servers": [
+    "https://substack.com"
+  ],
+  "scopes_supported": [
+    "mcp:read"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

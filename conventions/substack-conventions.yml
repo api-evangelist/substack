@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live probes of substack.com, mcp.substack.com and publication hosts, plus
+  https://substack.com/api-tos and the Substack Help Center
+note: >-
+  Substack publishes no API style guide, so these conventions were read off live
+  responses and the terms of use rather than from documentation. Where a convention is
+  simply absent, it is recorded as absent — that is the useful fact for an integrator.
+authentication:
+  style: >-
+    Two unrelated models. OAuth 2.1 authorization-code + PKCE (scope mcp:read) for the
+    MCP server; an application-approved bearer token for the Developer API. No API key
+    query parameter, no basic auth, no mTLS.
+  artifact: authentication/substack-authentication.yml
+  scopes: scopes/substack-scopes.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, no retry-safety contract, and nothing in the terms or the docs
+    about duplicate suppression. The only Substack surfaces an integrator can reach are
+    read-only (RSS, the MCP server, the Developer API profile lookup), so there is no
+    write path that would need one today. No Idempotency pointer is emitted for this
+    provider.
+pagination:
+  style: offset-limit
+  observed_on: https://{publication}.substack.com/api/v1/posts
+  parameters:
+    - name: limit
+      in: query
+      observed: true
+    - name: offset
+      in: query
+      observed: true
+  response_envelope: bare JSON array
+  cursor: false
+  total_count: false
+  documented: false
+  note: >-
+    Observed on the undocumented JSON endpoints the Substack web application uses. The
+    response is a bare array with no envelope, no total and no next-page link, so a
+    client must page blind until a short page comes back. Substack publishes no
+    contract for this surface — recorded as observed behaviour, not as a supported API.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: null
+  note: >-
+    No X-Request-Id or correlation header is returned. Substack does return its own
+    deployment diagnostics on every response — x-cluster, x-deploy (a build SHA),
+    x-service, x-served-by: Substack, x-sub (the publication slug on publication hosts)
+    — which are useful for reporting an issue but are not per-request identifiers.
+versioning:
+  style: uri-path
+  current: v1
+  artifact: lifecycle/substack-lifecycle.yml
+error_envelope:
+  format: vendor-json
+  shapes:
+    - '{"error": "<code>", "error_description": "<message>"}'
+    - '{"error": "<message>", "type": "<kind>"}'
+  rfc9457: false
+  artifact: errors/substack-problem-types.yml
+  note: >-
+    Content-Type is not stable across surfaces — api.substack.com and mcp.substack.com
+    answer unknown paths with an HTML fragment, substack.com with a full HTML page.
+    Branch on Content-Type before parsing.
+rate_limit_signaling:
+  headers: none
+  artifact: rate-limits/substack-rate-limits.yml
+content_negotiation:
+  json: true
+  xml: true
+  note: RSS/Atom XML for feeds, JSON for the API surfaces.
+transport:
+  https_only: true
+  hsts: 'max-age=31536000; includeSubDomains; preload'
+  http2: true
+  cdn: Cloudflare
+  artifact: security/substack-domain-security.yml
+caching:
+  note: >-
+    API responses are sent cache-control: no-cache. Feeds are served through Cloudflare
+    and can return cf-cache-status: HIT.
+cookies:
+  note: >-
+    Every response — including anonymous API and feed requests — sets tracking cookies
+    (ab_testing_id, ajs_anonymous_id, visit_id, cookie_storage_key). A programmatic
+    client should discard them rather than maintain a cookie jar.
+agent_posture:
+  robots: https://substack.com/robots.txt
+  llms_txt: false
+  ai_plugin: false
+  agent_card: false
+  mcp: https://mcp.substack.com/api/v1/mcp
+  note: >-
+    Substack's agent story is MCP-only. There is no llms.txt, no ai-plugin.json and no
+    A2A agent card on any host; the officially supported way for an agent to reach
+    Substack data is the MCP connector, and it is read-only and gated to Bestseller
+    publications.

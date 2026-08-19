@@ -1,0 +1,83 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://status.substack.com/, https://substack.com/changelog,
+  https://substack.com/api-tos
+versioning:
+  scheme: uri-path
+  current: v1
+  evidence: >-
+    Every Substack API path observed carries an explicit /api/v1/ segment — the MCP
+    endpoint https://mcp.substack.com/api/v1/mcp and the web application's own JSON
+    endpoints (https://{publication}.substack.com/api/v1/posts). No header, date or
+    train versioning was observed.
+  policy_published: false
+  note: >-
+    Substack publishes no versioning policy. The only version commitment in writing is
+    in the Developer API Terms of Use, which reserves the right to "modify or
+    discontinue the API or these API Terms at any time" with no notice period.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support observed, and
+    no advance-notice commitment. Section 12 of the API Terms
+    (https://substack.com/api-tos) is the closest thing and it is the opposite of a
+    deprecation policy: modification or discontinuation at any time, effective on
+    continued use. Section 9 permits immediate suspension or termination of an
+    individual integrator's access with or without notice. No Deprecation pointer is
+    emitted for this provider because there is no policy to point at.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published SLA or uptime target. The API Terms disclaim all warranties and
+    provide the API "as is" and "as available".
+status_page:
+  url: https://status.substack.com/
+  provider: Atlassian Statuspage
+  page_id: 3fzngjd16vw0
+  alternate_url: https://substack.statuspage.io
+  api: https://substack.statuspage.io/api/v2/summary.json
+  api_status: 200
+  components:
+    - Substack publications
+    - Writer dashboards
+    - Email delivery
+    - Subscription invoice processing
+    - Substack.com
+    - Push Notifications
+    - Custom domains
+  note: >-
+    The status page covers the consumer and creator platform. Neither the MCP server
+    nor the Developer API appears as a component, so an agent depending on
+    mcp.substack.com has no status signal for the surface it actually calls.
+    https://status.substack.com/api/v2/summary.json returns the HTML page rather than
+    JSON; the machine-readable summary is served from the statuspage.io hostname.
+changelog:
+  url: https://substack.com/changelog
+  artifact: changelog/substack-changelog.yml
+deprecated_operations: []
+milestones:
+  - date: '2026-01-08'
+    event: Substack Developer API Terms of Use last updated
+    source: https://substack.com/api-tos
+  - date: '2026-04-21'
+    event: Substack Developer API support article last updated (per provider-stated date)
+    source: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
+  - date: '2026-08-07'
+    event: >-
+      "How to connect Substack to your AI Assistant" (the official MCP server
+      documentation) last updated
+    source: https://support.substack.com/api/v2/help_center/en-us/articles/50834026608916.json
+x-evidence:
+  - fetched: '2026-08-13'
+    url: https://substack.statuspage.io/api/v2/summary.json
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/changelog
+    http_status: 200
+  - fetched: '2026-08-13'
+    url: https://substack.com/api-tos
+    http_status: 200
