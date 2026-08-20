@@ -43,6 +43,21 @@ tags:
   - Newsletters
   - Publishing
   - Creator Economy
+  - Subscription
+  - Email
+  - Podcasting
+  - Notes
+  - Media
+  - Independent Media
+  - Paid Content
+  - MCP
+  - Agents
+  - RSS
+  - Analytics
+tags_raw:
+  - Newsletters
+  - Publishing
+  - Creator Economy
   - Subscriptions
   - Email
   - Podcasting
@@ -69,6 +84,11 @@ apis:
     humanURL: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
     baseURL: https://substack.com
     tags:
+      - Profile
+      - LinkedIn
+      - Read Only
+      - Gated
+    tags_raw:
       - Profile
       - LinkedIn
       - Read-Only
@@ -100,6 +120,12 @@ apis:
       - MCP
       - Agents
       - Analytics
+      - Read Only
+      - Authentication
+    tags_raw:
+      - MCP
+      - Agents
+      - Analytics
       - Read-Only
       - OAuth
     properties:
@@ -123,6 +149,10 @@ apis:
     humanURL: https://support.substack.com/hc/en-us/articles/360038239391-Is-there-an-RSS-feed-for-my-publication
     baseURL: https://{publication}.substack.com
     tags:
+      - RSS
+      - Read Only
+      - Syndication
+    tags_raw:
       - RSS
       - Read-Only
       - Syndication
