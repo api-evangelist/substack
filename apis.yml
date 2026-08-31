@@ -97,7 +97,7 @@ apis:
     tags:
       - Profile
       - LinkedIn
-      - Read Only
+      - Read-Only
       - Gated
     tags_raw:
       - Profile
@@ -131,7 +131,7 @@ apis:
       - MCP
       - Agents
       - Analytics
-      - Read Only
+      - Read-Only
       - Authentication
     tags_raw:
       - MCP
@@ -161,7 +161,7 @@ apis:
     baseURL: https://{publication}.substack.com
     tags:
       - RSS
-      - Read Only
+      - Read-Only
       - Syndication
     tags_raw:
       - RSS
