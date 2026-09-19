@@ -95,7 +95,7 @@ apis:
     humanURL: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
     baseURL: https://substack.com
     tags:
-      - Profile
+      - Profiles
       - LinkedIn
       - Read Only
       - Gated
