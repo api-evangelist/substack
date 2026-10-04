@@ -93,7 +93,6 @@ apis:
       Developer API section of account settings. Only profiles meeting
       Substack's authenticity thresholds are returned.
     humanURL: https://support.substack.com/hc/en-us/articles/45099095296916-Substack-Developer-API
-    baseURL: https://substack.com
     tags:
       - Profiles
       - LinkedIn
