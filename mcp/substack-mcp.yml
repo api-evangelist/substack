@@ -82,3 +82,18 @@ x-not-this:
     @danielsimonjr/substack-mcp on npm, Narrareach, SubflowAI, AnythingMCP). None of them are Substack,
     Inc. and none are recorded as this provider's server. Only the mcp.substack.com endpoint above is
     first-party.
+rfc9728:
+  endpoint: https://mcp.substack.com/api/v1/mcp
+  metadata_url: https://mcp.substack.com/.well-known/oauth-protected-resource/api/v1/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.substack.com/api/v1/mcp
+    authorization_servers:
+    - https://substack.com
+    scopes_supported:
+    - mcp:read
+    bearer_methods_supported:
+    - header
