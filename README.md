@@ -1,4 +1,4 @@
-# substack
+# Substack
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Substack — independent newsletter and media platform for paid subscriptions, posts, podcasts, video, chat, and Notes
+Substack is an independent newsletter and media platform that lets writers, podcasters, video creators, and other culture makers publish directly to readers and monetize through paid subscriptions. Founded in 2017 by Chris Best (CEO), Jairaj Sethi (CTO), and Hamish McKenzie (CWO) and headquartered in San Francisco with a New York City office, Substack provides built-in subscription billing, paid posts, podcasting, chat, video, Notes, and a cross-publication recommendations network. Creators keep 90 percent of subscription revenue (less credit card fees) and own their mailing lists and content. The platform reports more than five million paid subscriptions and tens of millions of weekly active readers. Substack does not offer a general-purpose public REST API for managing publications, posts, or subscribers. It does publish a narrowly scoped official Developer API (released April 2026) that allows token-authenticated lookup of public Substack profiles by LinkedIn handle, gated by an application and Terms-of-Use process. Substack also runs an official remote MCP server at https://mcp.substack.com/api/v1/mcp, documented August 2026, which gives an MCP-capable AI assistant read-only access to publication analytics under OAuth 2.1 with the mcp:read scope, gated to Admins of Bestseller publications. Read access to public content is otherwise available via per-publication RSS feeds, and the broader integration ecosystem relies on reverse-engineered, unofficial JSON endpoints used by the Substack web application. Substack publishes no OpenAPI, no AsyncAPI, no webhooks and no first-party SDK in any package registry.
+
+**Areas:** Newsletters · Publishing · Creator Economy · Subscription · Email · Podcasts · Notes · Media · Independent Media · Paid Content · MCP · Agents
+
+## Substack on APIs.io
+
+Everything profiled for Substack is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/substack/](https://apis.io/providers/substack/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Substack Developer API](https://apis.io/apis/substack/substack-developer-api/) — Narrowly scoped official API that returns public Substack profile data for a given LinkedIn handle. Access requires accepting the Developer API Terms of…
+- [Substack MCP Server](https://apis.io/apis/substack/substack-mcp-server/) — Official remote Model Context Protocol server that connects a Substack publication to an MCP-capable AI assistant (Claude, ChatGPT, Cursor). Read-only: it…
+- [Substack RSS Feeds](https://apis.io/apis/substack/substack-rss-feeds/) — Per-publication public RSS feeds available at https://{publication}.substack.com/feed for syndication and read-only access to posts. RSS 2.0 with the…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Substack](https://apis.io/servers/substack/substack/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Substack Authentication](https://apis.io/security/substack/substack-authentication/)
+- [Substack Domain Security](https://apis.io/security/substack/substack-domain-security/)
+- [Substack Vulnerability Disclosure](https://apis.io/security/substack/substack-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Substack Scopes](https://apis.io/scopes/substack/substack-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Substack Plans Pricing](https://apis.io/plans/substack/substack-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Substack Rate Limits](https://apis.io/rate-limits/substack/substack-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Substack Finops](https://apis.io/finops/substack/substack-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://substack.com/)
+- [Documentation](https://support.substack.com/hc/en-us)
+- [Pricing](https://support.substack.com/hc/en-us/articles/360037607131-How-much-does-Substack-cost)
+- [Sign up](https://substack.com/signup)
+- [Support](https://support.substack.com/hc/en-us/articles/43904995414164-How-to-contact-Substack-Support)
+- [Blog](https://on.substack.com/)
+- [Security](https://substack.com/vulnerability-disclosure)
+- [Terms of service](https://substack.com/tos)
+- [Privacy policy](https://substack.com/privacy)
+- [GitHub](https://github.com/substackinc)
+- [Status](https://status.substack.com/)
+
+## API Evangelist rating
+
+**Kin Score 39.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 65.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 47.6 |
+| Access clarity | 65.8 |
+
+**Agent readiness 32.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/substack/](https://apis.io/providers/substack/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Substack: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/substack/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
